@@ -25,20 +25,21 @@ const btn = document.querySelector('button');
 // },1000);
 
 const moveX = (element,amount,delay,onSuccess,onFailure) => {
-  
-  const bodyBoundary=document.body.clientWidth;
-  const elRight = element.getBoundingClientRect().right;
-  const currLeft = element.getBoundingClientRect().left;
-
-  if(elRight + amount > bodyBoundary){
-    onFailure();
-  }else{
     setTimeout(() => {
-      element.style.transform=`translate(${currLeft + amount}px)`;
-      onSuccess();
+
+      const bodyBoundary=document.body.clientWidth;
+      const elRight = element.getBoundingClientRect().right;
+      const currLeft = element.getBoundingClientRect().left;
+
+      if(elRight + amount > bodyBoundary){
+        onFailure();
+      }
+      else{
+        element.style.transform=`translate(${currLeft + amount}px)`;
+        onSuccess();
+      }
+      
     },delay);
-  }
-  
 }
 
 // moveX(btn,100,1000,() => {
@@ -70,3 +71,13 @@ moveX(btn,100,1000,() => {
   alert('cannot move further');
 })
 
+//PROMISES
+// moveXPromise(btn,100,1000)
+//   .then(() => moveXPromise(btn,100,1000))
+//   .then(() => moveXPromise(btn,200,1000))
+//   .then(() => moveXPromise(btn,300,1000))
+//   .then(() => moveXPromise(btn,50,1000))
+//   .then(() => moveXPromise(btn,50,1000))
+//   .catch((position) => {
+//     alert("cannot move further!");
+//   })
