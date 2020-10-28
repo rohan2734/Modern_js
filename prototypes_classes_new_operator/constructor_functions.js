@@ -41,3 +41,40 @@ black.hex();
  *  but this is not possible in factory functions, 
  * so here comes the constructor functions
  */
+
+function Color(r,g,b){
+  this.r=r;
+  this.g =g;
+  this.b=b;
+  //console.log(this);
+  
+  //here this console.log(this) prints the window, becuase it is the nearest object
+  //since this is now gobal scope
+
+  // this.rgb=function(){
+  //   const {r,g,b} = this;
+  //   return `rgb(${r},${g},${b})`;
+  // }
+  /**
+   * even if we add this.rgb as a funciton,it doesnt get included in the prototype ,
+   * so we do it outside the Color, by Color.prototype.rgb=function(){}
+   */
+}
+Color.prototype.rgb=function(){
+  const {r,g,b} = this;
+  return `rgb(${r},${g},${b})`;
+}
+
+//10:35
+
+new Color(255,40,100);
+
+/**
+ * when we  call the constructor function color, it is going to create a blank,plain js object
+ * links(sets the contstructor of) this object to another object
+ * passes the newly created object from  step1 as this context
+ * returns this if the fuciton doesnt return its own object;
+ * 
+ */
+
+
