@@ -65,10 +65,24 @@ Color.prototype.rgb=function(){
   return `rgb(${r},${g},${b})`;
 }
 
-//10:35
+Color.prototype.hex=function(){
+  const {r,g,b} = this;
+  return '#' + ((1<<24) + (r<<16) + (g<<8) + b).toString(16).slice(1);
+}
 
-new Color(255,40,100);
+Color.prototype.rgba=function(a=1.0){
+  const {r,g,b} = this;
+  return `rgba(${r},${g},${b},${a})`;
+}
+/**
+ * here we cant use arrow functions, 
+ * we should only use traditional functions,since "this" is used
+ * as arrow functions behave differently with the keyword "this"
+ */
 
+
+const color1 = new Color(255,40,100);
+const color2 = new Color(0,0,0);
 /**
  * when we  call the constructor function color, it is going to create a blank,plain js object
  * links(sets the contstructor of) this object to another object

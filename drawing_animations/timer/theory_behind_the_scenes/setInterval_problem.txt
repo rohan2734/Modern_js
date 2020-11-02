@@ -1,0 +1,22 @@
+start = () => {
+    setInterval(this.tick,1000); 
+  }
+  
+  tick = () => {
+    console.log("tick");
+  }
+
+* here , when we referesh the page, the setInterval(this.tick,1000); 
+* the setInterval doesnt start immediately, instead it waits for one second and then starts counting.
+* but this is not a good sign, bcz, users want it to start immediately
+* so we will add as 
+
+start = () => {
+    this.tick();
+    setInterval(this.tick,1000); 
+  }
+
+* now for pausing it,
+* we actually a timer from setInterval();
+* we receive a  unique id, 
+
