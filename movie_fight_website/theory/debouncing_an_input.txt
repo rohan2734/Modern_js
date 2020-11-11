@@ -1,0 +1,4 @@
+* Debouncing an input
+
+  waiting for some time to pass after the last event to 
+  actually do something.
