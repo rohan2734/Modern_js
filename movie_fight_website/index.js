@@ -1,26 +1,40 @@
-const fetchData = async () => {	
+const fetchData = async searchTerm => {	
   const response = await axios.get("http://www.omdbapi.com/",{	
     params:{	
       apikey: "190a0d30",	
-      // s:"avengers"	
-      i:"tt0848228"	
+      s:searchTerm	
+      //i:"tt0848228"	
     }	
-  });	
+  });
+  
+  if(response.data.Error){
+    return [];
+  }
 
-  console.log(response.data);	
+  // console.log(response.data);	
+  return response.data.Search;
 } 	
 
 const input = document.querySelector("input");
 
-let timeoutID;
+//debounce shifted to utils.js
 
-const onInput = event => {
-  if(timeoutID){
-    clearInterval(timeoutID);
+
+const onInput = async (event) => {
+  const movies = await fetchData(event.target.value);
+  
+  for (let movie of movies) {
+    const div  = document.createElement("div");
+
+    div.innerHTML = `
+      <img src= "${movie.Poster}" />
+      <h1>${movie.Title}</h1>
+    `;
+
+    document.querySelector("#target").appendChild(div);
   }
-  timeoutID = setTimeout(() => {
-    fetchData(event.target.value);
-  },500);
 };
 
-input.addEventListener("input",onInput);
+
+input.addEventListener("input",debounce(onInput,500));
+
