@@ -1,0 +1,19 @@
+* option1
+
+* in option1, we try to select the div with a class name,
+* setup a event listener of the input, 
+* we would take the results, and generate the options
+* and throw the anchor tags or results in the div of class dropdown content
+
+* this would be obivous, but there is also other way/
+* but the draw back, is our js code would not work correctly, if we dont have the input element.
+* likewise, if we mispelled the class names, or we moved the classes, then the application would be broken
+
+
+* option 2
+
+* we are going to have less html.
+* and we are going to rely on js code, for creating the html, elements
+* this is the flexible approach, because we could use our autocomplete widget , at other place in the files.
+
+
