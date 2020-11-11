@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <svg height="200" width="200">
+    <circle 
+      r="90" cx="100" cy="100" 
+      fill="transparent" stroke="blue"
+      stroke-width="10" stroke-dasharray="565"
+      stroke-dashoffset="-50" 
+      transform="rotate(-90  100 100)"
+    />
+  </svg>
+  <input id="duration" value="30"/>
+  <button id="start">Start</button>
+  <button id="pause">Pause</button>
+  <!-- <script src="./timer.js"></script> -->
+  <!-- here we want to run the timer.js run first, bcz index.js is dependent on it -->
+  <!-- <script src="./index.js"></script> -->
+</body>
+</html>
+
+<!-- <circle 
+r="90" cx="100" 
+cy="100" fill="transparent"
+stroke="blue" stroke-width="10"
+stroke-dasharray="10 5"
+/>
+here in stroke-dashray, the first argument is the stroke length, and
+the second argument is the gap between the strokes 
+* but if we ignore the second argument,and pass only one argument,
+  that means the first argument takes up both values
+-->
+
+<!-- here rotate(-90) is for rotating the amount of degrees and the direction
+-ve is for anti clockwise
+and the 100 and 100 are for origin point for  transform
+by default the origin point of transoform is at origin, but we shifted it to 100 100 -->
