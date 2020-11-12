@@ -1,0 +1,70 @@
+* (All Code touches everything)
+
+* our codes variables are reaching through each file.
+
+* Autocomplete widget must have been a reusable codes
+
+  const onInput = async (event) => {
+  const movies = await fetchData(event.target.value);
+  
+  if(!movies.length){
+    dropdown.classList.remove("is-active");
+    return;
+  }
+
+  dropdown.classList.add("is-active");
+
+  resultsWrapper.innerHTML='';
+
+  for (let movie of movies) {
+    const option  = document.createElement("a");
+    const imgSRC = movie.Poster === "N/A" ? "": movie.Poster;
+
+    option.classList.add("dropdown-item")
+    option.innerHTML = `
+      <img src= "${imgSRC}" />
+      ${movie.Title}
+    `;
+
+    option.addEventListener("click",() => {
+      dropdown.classList.remove("is-active")
+      input.value = movie.Title;
+
+      //do another request
+      //get data
+      //render  data
+
+      onMovieSelect(movie);
+    });
+
+    resultsWrapper.appendChild(option);
+  }
+};
+
+* here , in this code, , when we have to use the onInput in some other code,
+* then we would have not used  a movie object there also, like if we have chosen recipies
+* the recipies may not have  a poster , so we cannot use the hardcoded structure for this funciton
+* we need to replace the movie with the recepie, and write more code
+
+* Autocomplete has the knowledge of what a movie  is clicked
+
+* here we have the onMovieSelect, but we might have to change that, to some onRecepieSelect.
+* so this is the same issue again
+
+* Many global veriables that refer to specific elements -it will be really hard to 
+  show a  second Autocomplete on the screen
+
+* 
+const root = document.querySelector(".autocomplete");
+root.innerHTML=`
+  <label><b>Search For a Movie</b></label>
+  <input class="input" />
+  <div class="dropdown ">
+    <div class="dropdown-menu">
+      <div class="dropdown-content results">
+      </div>
+    </div>
+  </div>
+`;
+
+* what would we do now , if we need second autocomplete widget here
