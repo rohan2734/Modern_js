@@ -1,90 +1,56 @@
-const fetchData = async searchTerm => {	
-  const response = await axios.get("http://www.omdbapi.com/",{	
-    params:{	
-      apikey: "190a0d30",	
-      s:searchTerm	
-      //i:"tt0848228"	
-    }	
-  });
-  
-  if(response.data.Error){
-    return [];
-  }
-
-  // console.log(response.data);	
-  return response.data.Search;
-} 	
-
-const root = document.querySelector(".autocomplete");
-root.innerHTML=`
-  <label><b>Search For a Movie</b></label>
-  <input class="input" />
-  <div class="dropdown ">
-    <div class="dropdown-menu">
-      <div class="dropdown-content results">
-      </div>
-    </div>
-  </div>
-`;
-
-const input = document.querySelector("input");
-const dropdown = document.querySelector(".dropdown"); //to open the dropdown
-const resultsWrapper = document.querySelector(".results"); //to add the content
-
-
-//debounce shifted to utils.js
-
-
-const onInput = async (event) => {
-  const movies = await fetchData(event.target.value);
-  
-  if(!movies.length){
-    dropdown.classList.remove("is-active");
-    return;
-  }
-
-  dropdown.classList.add("is-active");
-
-  resultsWrapper.innerHTML='';
-
-  for (let movie of movies) {
-    const option  = document.createElement("a");
+const autoCompleteConfig = {
+  //renderOption: () =>{}
+  renderOption(movie){
     const imgSRC = movie.Poster === "N/A" ? "": movie.Poster;
-
-    option.classList.add("dropdown-item")
-    option.innerHTML = `
-      <img src= "${imgSRC}" />
-      ${movie.Title}
-    `;
-
-    option.addEventListener("click",() => {
-      dropdown.classList.remove("is-active")
-      input.value = movie.Title;
-
-      //do another request
-      //get data
-      //render  data
-
-      onMovieSelect(movie);
+    return  `
+    <img src= "${imgSRC}" />
+    ${movie.Title} (${movie.Year})
+  `;
+  },
+ 
+  inputValue(movie){
+    return movie.Title;
+  },
+  async fetchData(searchTerm){	
+    const response = await axios.get("http://www.omdbapi.com/",{	
+      params:{	
+        apikey: "190a0d30",	
+        s:searchTerm	
+        //i:"tt0848228"	
+      }	
     });
-
-    resultsWrapper.appendChild(option);
-  }
+    
+    if(response.data.Error){
+      return [];
+    }
+  
+    return response.data.Search;
+  } 
 };
 
 
-input.addEventListener("input",debounce(onInput,500));
-
-document.addEventListener("click",event => {
-  // console.log(event.target);
-
-  //if root element doesnt contain the element we clicked on
-  if(!root.contains(event.target)){
-    dropdown.classList.remove("is-active");
+createAutocomplete({
+  ...autoCompleteConfig,
+  root: document.querySelector("#left-autocomplete"),
+  onOptionSelect(movie){
+    document.querySelector(".tutorial").classList.add("is-hidden")
+    onMovieSelect(movie,document.querySelector("#left-summary"),"left");
   }
 })
 
-const onMovieSelect = async (movie) => {
+createAutocomplete({
+  ...autoCompleteConfig,
+  root: document.querySelector("#right-autocomplete"),
+  onOptionSelect(movie){
+    document.querySelector(".tutorial").classList.add("is-hidden")
+    onMovieSelect(movie,document.querySelector("#right-summary"),"right");
+  }
+  
+})
+
+let leftMovie;
+let rightMovie;
+const onMovieSelect = async (movie,summaryElement,side) => {
   const response = await axios.get("http://www.omdbapi.com/",{	
     params:{	
       apikey: "190a0d30",	
@@ -92,11 +58,31 @@ const onMovieSelect = async (movie) => {
       //i:"tt0848228"	
     }	
   });
-  console.log(response.data);
-  const movieDetail = response.data;
-  console.log(movieDetail);
-  document.querySelector("#summary").innerHTML = movieTemplate(response.data)
-}
+  // console.log(response.data);
+  // const movieDetail = response.data;
+  // console.log(movieDetail);
+  summaryElement.innerHTML = movieTemplate(response.data);
+
+  if(side === "left"){
+    leftMovie = response.data;
+  }else{
+    rightMovie = response.data;
+  }
+
+  if(leftMovie && rightMovie){
+    runComparision();
+  }
+};
+
+const runComparision=() => {
+  // console.log("TIME FOR comparision");
+  
+  /**
+   *  find the first "article " element for each movie
+   * run a compariison on the # of awards
+   * the apply some styling to that "article" element 
+   */
+};
 
 const movieTemplate = (movieDetail) => {
   return `

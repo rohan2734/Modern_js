@@ -1,0 +1,28 @@
+* index.js
+
+* we are going to have not reusable code in index.js
+* ex: process of fetching movies. 
+* or how a inidividual movie should look like
+* or what to do when a movie is clicked
+
+* autocomplete.js
+
+* we are going to have a extremely reusable code , that is all related
+  to give a  autocomplete to displaying on the screen successfully
+* it should also have zero knowledge of movies or recipes
+* it must be able to ran several times in the same project
+* so to make this happen we are going to make a function inside autocomplete.js
+  that will take the  config object,  and process the options in the config object 
+  and render  an autocomplete on the screen.
+* our config object looks like 
+  * fetchData() : funciton to find movies
+  * renderOption()- funciton that knows how to render a movie
+  * onOptionSelect()- funciton that gets invoked when a user clicks on an option
+  * root-element that the autocomplete should be rendered into.
+
+* so because we are passing these 4 options in the config object, it is like wrapping up
+  the customised code specific to our applicaiton, and passes it to the autocomplete and it calls
+  them whenever it needs to fetch data, or what to do when a user clicks on something
+
+* whenever we want to reuse , we are going to shift the autocomplete , come up with a new config
+  object, that has the exact same options .
