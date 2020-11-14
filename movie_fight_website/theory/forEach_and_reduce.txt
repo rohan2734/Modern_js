@@ -1,0 +1,17 @@
+* forEach
+ 
+ let count=0;
+  const awards = movieDetail.Awards.split(" ").forEach((word) => {
+    const value = parseInt(word);
+
+    // if(isNaN(value)){
+    //   return;
+    // }else{
+    //   count +=value;
+    // }
+    if(!isNaN(value)){
+      count+=value;
+    }
+  });
+
+* reduce
