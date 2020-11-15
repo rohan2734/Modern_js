@@ -1,0 +1,14 @@
+* world
+  * it tracks the speed, location ,weight, and the velocity inside this world object 
+
+* Engine
+  * it reads all the data like speed, location and changes the position of all those different shapes
+
+* Runner
+  * it runs about 60times per second , and tells the engine to process the data stored in the world object
+
+* render
+  * it will take a look at all the shapes, and it shows it
+
+* body
+ * it is a shape that is going to be displayed, like a circle, oval, triange, or any aribtary shape of the polygon

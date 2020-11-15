@@ -1,0 +1,6 @@
+/**
+ * we are going to use Engine to transform from one state to another state
+ * Render is used to draw the shapes on the screen
+ * Runner is going to coordinate updates between the Engine and the world
+ * Bodies is colleciton of shapes
+ */
