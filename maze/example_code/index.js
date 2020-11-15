@@ -48,11 +48,7 @@ for(let i=0;i<20;i++){
   }else{
     World.add(
       world,
-      Bodies.circle(Math.random()*width,Math.random()*height,35,{
-        render:{
-          fillStyle: "red" //all the circles are red
-        }
-      }));
+      Bodies.circle(Math.random()*width,Math.random()*height,35));
   }
   
 }
