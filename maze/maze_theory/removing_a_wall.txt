@@ -1,0 +1,2 @@
+* if we are crossing vertically, then we need to remove a  horizontal wall
+* and if we are crossing horizontally, then we need to remove a vertical wall
