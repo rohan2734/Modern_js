@@ -1,17 +1,20 @@
-const { Engine,Render,Runner,World,Bodies} = Matter;
+const { Engine,Render,Runner,World,Bodies,Body,Events} = Matter;
 
 const engine = Engine.create();
+engine.world.gravity.y=0;
 const {world} = engine; 
 
 const cells=3;
-const width=600;
-const height=600;
+const width= window.innerWidth;//600
+const height=window.innerHeight;//600
+
+const unitLength = width/cells;
 
 const render = Render.create({
   element : document.body, 
   engine: engine, 
   options:{
-    wireframes:true,
+    wireframes:false,
     width, //width:width,
     height
   } 
@@ -26,10 +29,10 @@ Runner.run(Runner.create(),engine);
 //walls
 
 const walls = [
-  Bodies.rectangle(width/2,0,width,40,{isStatic:true}),
-  Bodies.rectangle(width/2,height,width,40,{isStatic:true}),
-  Bodies.rectangle(0,height/2,40,height,{isStatic:true}),
-  Bodies.rectangle(width,height/2,40,height,{isStatic:true})
+  Bodies.rectangle(width/2,0,width,2,{isStatic:true}),
+  Bodies.rectangle(width/2,height,width,2,{isStatic:true}),
+  Bodies.rectangle(0,height/2,2,height,{isStatic:true}),
+  Bodies.rectangle(width,height/2,2,height,{isStatic:true})
 ];
 
 World.add(world,walls); 
@@ -80,10 +83,10 @@ const stepThroughCell = (row,column) => {
   
   //Assemble randomly ordered neighbours
   const neighbours = shuffle([
-    //[row-1,column,"up"], //up
-    //[row,column+1,"right"], //right
-   [row+1,column,"down"], //down
-    //[row,column-1,"left"] //left
+    [row-1,column,"up"], //up
+    [row,column+1,"right"], //right
+    [row+1,column,"down"], //down
+    [row,column-1,"left"] //left
   ]); 
 
 
@@ -112,9 +115,123 @@ const stepThroughCell = (row,column) => {
     }else if(direction === "down"){
       horizontals[row][column] = true;
     }
+
+    stepThroughCell(nextRow,nextColumn);
   }
   //visit that next cell (call the stepThroughCellAgain)
+  
 };
 
 stepThroughCell(startRow,startCol);
-// console.log(grid);
+
+horizontals.forEach((row,rowIndex) => {
+  row.forEach((open,columnIndex) => {
+    if(open){
+      return;
+    }
+    const wall = Bodies.rectangle(
+      columnIndex*unitLength + unitLength/2,
+      rowIndex*unitLength + unitLength,
+      unitLength,//width
+      10, //height
+      {
+        label:"wall",
+        isStatic:true
+      }
+    );
+    World.add(world,wall);
+  });
+})
+
+verticals.forEach((row,rowIndex) => {
+  row.forEach((open,columnIndex) => {
+    if(open){
+      return;
+    }
+
+    const wall = Bodies.rectangle(
+      columnIndex*unitLength + unitLength,
+      rowIndex*unitLength + unitLength/2,
+      10,
+      unitLength,
+      {
+        label:"wall",
+        isStatic:true
+      }
+    );
+    World.add(world,wall);
+  })
+}) 
+
+//Goal
+
+const goal = Bodies.rectangle(
+  width - unitLength/2,
+  height - unitLength/2,
+  unitLength*0.7,
+  unitLength*0.7,
+  {
+    label:"goal",
+    isStatic:true
+  }
+);
+
+World.add(world,goal);
+
+//Ball
+
+const ball = Bodies.circle(
+  unitLength/2,
+  unitLength/2,
+  unitLength/4,
+  {
+    label:"ball"
+  }
+ 
+) 
+World.add(world,ball);
+
+//https://keycode.info
+document.addEventListener("keydown",event => {
+  const {x,y} = ball.velocity;
+ 
+  
+  if(event.keyCode === 87){
+    Body.setVelocity(ball,{x:x,y:y-5});
+    // console.log("move ball up");
+  }
+  if(event.keyCode === 68){
+    Body.setVelocity(ball,{x:x+5,y});
+    //console.log("move ball right");
+  }
+  if(event.keyCode === 83){
+    Body.setVelocity(ball,{x,y:y+5});
+    //console.log("move ball down");
+  }
+  if(event.keyCode === 65){
+    Body.setVelocity(ball,{x:x-5,y});
+    //console.log("move ball left");
+  }
+})
+
+//Win Condition
+
+Events.on(engine,"collisionStart",event => {
+  event.pairs.forEach((collision) => {
+    //console.log(collision);
+    const labels= ["ball","goal" ];
+    if(
+      labels.includes(collision.bodyA.label) && 
+      labels.includes(collision.bodyB.label)
+    ){
+      //console.log("User won");
+      world.gravity.y = 1;
+      world.bodies.forEach(body => {
+        if(body.label==="wall"){
+          Body.setStatic(body,false);
+        }
+      })
+    }
+  })
+})
+
