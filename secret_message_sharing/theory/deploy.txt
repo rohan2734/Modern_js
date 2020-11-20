@@ -1,0 +1,5 @@
+* run npx now
+* (make sure u have nodejs installed)
+* singup , or login
+* check the email
+* done
