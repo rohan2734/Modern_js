@@ -1,0 +1,9 @@
+* when we do a const message= require("./myscript.js");
+* and we are using for console.log(message);
+* then, it would exectute the require function , and the myscriptjs and it would store the "hi"
+  in the const message; and it would store in the require cache also .
+* require cache , is an object that stores the result of requiring a file.
+  it has some number of keys and values
+  keys are filenames.value is going to be , whatever we export it. 
+* but if we require it twice "./myscript.js" , it doesnt execute the require function again
+  but it would call the require cache. so it doesnt execute myscript.js
