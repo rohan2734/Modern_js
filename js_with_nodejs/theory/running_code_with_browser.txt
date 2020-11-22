@@ -1,0 +1,7 @@
+* when we have two scripts, one with message, and a 
+  const message="hi"; defined in that message.js file
+* and another file, with index.js, with console.log(message);
+* then we would see the message as "hi", when it is in index.html
+
+* but in node, it doesnt happen, variables are not shared between the files
+  instead , if we want to share ,we should use module.exports
