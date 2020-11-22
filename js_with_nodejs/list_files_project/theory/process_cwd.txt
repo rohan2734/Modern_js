@@ -1,2 +1,0 @@
-* we didnt require process, 
-  since it is automatically added to globall scope
