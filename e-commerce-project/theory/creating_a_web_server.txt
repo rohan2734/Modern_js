@@ -1,0 +1,5 @@
+* here, in the diagram, (request,nodejs server), our browser is making 
+  htt request to a nodejs web server.
+* nodejs can run a web server and can handle http request.
+* we use express which  helps us to create a webserver easily.
+
