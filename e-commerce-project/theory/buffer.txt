@@ -1,0 +1,19 @@
+
+app.post("/",(req,res) => {
+    //get access to email,password,passwordConfirmation
+    req.on("data",data => {
+        console.log(data.toString);
+    })
+    res.send("Account created !!!");
+}); 
+
+//here the data we get from req.on, is a buffer object which appears like this:
+<Buffer 65 6d 61 69 6c 3d 6a 61 67 61 6e 64 65 76 61
+ 6b 69 31 25 34 30 67 6d 61 69 6c 2e 63 6f 6d 26 70 
+ 61 73 73 77 6f 72 64 3d 64 73 64 26 70 61 73 73 77 6f
+  ... 21 more bytes>
+<Buffer 65 6d 61 69 6c 3d 61 73 64 66 26 70 61 73 
+73 77 6f 72 64 3d 73 64 66 61 73 64 61 26 70 61 73
+ 73 77 6f 72 64 43 6f 6e 66 69 72 6d 61 74 69 6f 6e
+  3d 61 ... 5 more bytes>
+//so if we want to convert into plain string, we need to use data.toString method.

@@ -1,0 +1,18 @@
+* our website doesnt handle the http request ,instead
+  it forwards the request to the operating system.
+* the browser takes the url u entered, and it splits into 
+  host: localhost (domain we are trying to acces, it can be google.com)
+  port : 3000,
+  path: "/",
+  method:"GET",(by default it is get, it is a request to read the information.)
+
+* if we put a http(then default port 80). if https(then default port is 443)
+* this request is taken to the operating system, and is taken to DNS server,
+  it is a outside server, it has mapping of host names and ip address.
+  if we want to send a request to google.com, then our operating system, goes to DNS server
+  asks, what is the IP address, and it receives it.
+* and it passes the request to the webserver, and get the response back.
+
+* if the host is localhost, the OS rather then reaching to the outside web server, instead it will handle
+  by itself, it will take a look at the port,
+  our os will have an array of ports,
