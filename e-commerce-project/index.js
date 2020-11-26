@@ -16,17 +16,31 @@ app.get("/",(req,res) => {
 }); //if anyone sends a request to "/", then we want run the callback function
 // and send the response.
 
-app.post("/",(req,res) => {
+// MIDDLEWARE
+
+const bodyParser = (req,res,next) => {
+    if(req.method === "POST"){
+        req.on("data",data => {
+            const parsed = data.toString("utf8").split("&");
+            const formData = {};
+            for(let pair of parsed){
+                const [key,value] = pair.split("=");
+                formData[key]=value;
+            }
+            // console.log(formData);
+            req.body = formData;
+            next();
+        })
+    }else{
+        next(); //callback 
+    }
+    
+    
+}
+
+app.post("/",bodyParser ,(req,res) => {
     //get access to email,password,passwordConfirmation
-    req.on("data",data => {
-        const parsed = data.toString("utf8").split("&");
-        const formData = {};
-        for(let pair of parsed){
-            const [key,value] = pair.split("=");
-            formData[key]=value;
-        }
-        console.log(formData);
-    })
+    //console.log(req.body);
     res.send("Account created !!!");
 }); 
 

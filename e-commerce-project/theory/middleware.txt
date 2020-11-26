@@ -1,0 +1,3 @@
+* middleware
+* function that does some preprocessing on req and res objects
+* they are primary means of code reuse.
