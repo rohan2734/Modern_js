@@ -1,0 +1,5 @@
+* there are three types of access methods for file access
+*  one is callbacks, one is promises, and other is the synchronous.
+
+* and in constructors, we want to have this check, but we cannot have asynchronous checks
+  so we will be using the synchronous 
