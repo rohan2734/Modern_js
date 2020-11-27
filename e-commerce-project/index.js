@@ -1,6 +1,9 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 
 const app = express(); 
+app.use(bodyParser.urlencoded({extended:true}));
+//if we want all of the route handlers to have this middleware applied
 
 app.get("/",(req,res) => { 
     res.send(`
@@ -16,29 +19,8 @@ app.get("/",(req,res) => {
 }); //if anyone sends a request to "/", then we want run the callback function
 // and send the response.
 
-// MIDDLEWARE
-
-const bodyParser = (req,res,next) => {
-    if(req.method === "POST"){
-        req.on("data",data => {
-            const parsed = data.toString("utf8").split("&");
-            const formData = {};
-            for(let pair of parsed){
-                const [key,value] = pair.split("=");
-                formData[key]=value;
-            }
-            // console.log(formData);
-            req.body = formData;
-            next();
-        })
-    }else{
-        next(); //callback 
-    }
-    
-    
-}
-
-app.post("/",bodyParser ,(req,res) => {
+// MIDDLEWARE- bodyparser
+app.post("/" ,(req,res) => {
     //get access to email,password,passwordConfirmation
     //console.log(req.body);
     res.send("Account created !!!");

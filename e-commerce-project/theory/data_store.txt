@@ -1,0 +1,4 @@
+* our data-store is going to take a form of individaul classes.
+* and each individaul class will manage  its own collection of objects
+* ex, we have one class that manages, list of users.
+
