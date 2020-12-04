@@ -14,7 +14,27 @@ class UsersRepository{
         }
     }
 
-    async checkForFile(){}
+    async getAll(){
+        //open the file called this.filename
+        return  JSON.parse(await fs.promises.readFile(this.filename,{ 
+            encoding:'utf-8'
+        }));
+    }
+
+    async create(attrs){
+        //{email:'alskdf@alskdjf.com'},password:'password'}
+        const records = await this.getAll();
+        records.push(attrs);
+        //write the updated 'records' array back to this.filename
+        
+    }
 }
 
-const repo = new UsersRepository("users.json");              
+const test = async () => {
+    const repo = new UsersRepository("users.json");  
+
+    const users = await repo.getAll();
+    console.log(users);
+}
+ 
+test();

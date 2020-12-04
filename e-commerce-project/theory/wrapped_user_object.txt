@@ -1,0 +1,19 @@
+const test = async () => {
+    const repo = new UsersRepository("users.json");  
+
+    await repo.getAll();
+}
+ 
+* we wrapped the await repo.getAll();
+* because nodejs dont support top level await,
+* so thats why we have kept it in a function.
+
+* we have created a an empty array  so that when the file is empty, 
+* it alway starts with an empty array
+
+this.filename = filename;
+        try{
+            fs.accessSync(this.filename)
+        }catch(err){
+            fs.writeFileSync(this.filename,"[]");
+        }

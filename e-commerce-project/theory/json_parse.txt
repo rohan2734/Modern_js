@@ -1,0 +1,7 @@
+const data = JSON.parse(contents);
+
+* inside the file, we are saving the users as json data.
+* once we load information, we have as a string,
+* now we need to convert into normal javascript objects, an array of objects
+
+* that is why we use , json.parse
