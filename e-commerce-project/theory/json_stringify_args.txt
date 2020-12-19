@@ -1,1 +1,4 @@
-* in writeAll, after the records, we passed null and then 2
+* in writeAll, after the records, we passed null and then 2,
+* null -> is a cistom formatter, for every string, in this we dont want to do anything, so it is null
+* the 3rd arg is the indentation, now for every nesting, we are getting 2 spaces
+
